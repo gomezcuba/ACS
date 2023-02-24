@@ -1,0 +1,289 @@
+\documentclass[xcolor=dvipsnames,aspectratio=169]{beamer}
+
+% INCLUSIÓN DOS PAQUETES IMPRESCINDIBLES DE IDIOMA E CODIFICACIÓN DE CARACTERE.
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+
+%ACRONYMS para engadir un glosario de acronimos automatizado
+% \usepackage[acronyms,nonumberlist,nopostdot,nomain,nogroupskip]{glossaries}
+% \input{./acronyms.tex}
+
+% PAQUETES PARA FIGURAS E GRAFICOS
+\usepackage{graphicx}
+%   \usepackage[pdftex]{graphicx}
+  \usepackage{epstopdf}
+   \graphicspath{{./img/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+   \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}   
+\usepackage{subfigure}
+\usepackage{caption}
+
+%Tikz plots
+\usepackage{tikz}
+\usepackage{tikzscale}
+\usetikzlibrary{plotmarks,patterns,decorations.pathreplacing,backgrounds,calc,arrows,arrows.meta,spy,matrix,backgrounds}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \UE (#1) {};}
+\newcommand{\DrawBox}[4][]{%
+    \tikz[overlay,remember picture]{%
+        \coordinate (TopLeft)     at ($(#2)+(-0.4em,1.6em)$);
+        \coordinate (BottomRight) at ($(#3)+(0.4em,-1.0em)$);
+        %
+        \path (TopLeft); \pgfgetlastxy{\XCoord}{\IgnoreCoord};
+        \path (BottomRight); \pgfgetlastxy{\IgnoreCoord}{\YCoord};
+        \coordinate (LabelPoint) at ($(\XCoord,\YCoord)!0.5!(BottomRight)$);
+        %
+        \draw [red,#1] (TopLeft) rectangle (BottomRight);
+        \UE [below, #1, fill=none, fill opacity=1] at (LabelPoint) {#4};
+    }
+}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+\usepgfplotslibrary{patchplots,groupplots}
+
+% OUTROS PAQUETES DE USO COMUN. HOXE EN DIA OS COMPILADORES SON TAN RAPIDOS QUE EU METO TODOS SEMPRE
+% \usepackage{float}
+% \usepackage{ucs} 
+% \usepackage{subcaption}
+\usepackage{psfrag}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts} 
+\usepackage{amssymb} 
+\usepackage{amsthm}
+\usepackage{pifont}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{stfloats}
+\usepackage{algorithm} 
+\usepackage{algorithmic} 
+\usepackage{url} 
+\usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{wasysym}
+
+\input{EETbeamerconfig.tex}
+\input{mydefinitions.tex}
+
+%---------------
+% LIMIAR
+%---------------
+%configuracion de opcions de beamer persoais, pero alleas ao estilo
+
+% COMANDO QUE INTRODUCE UNHA DIAPOSITIVA CUN ÍNDICE NO QUE APARECEN VELADAS TÓDALAS SECCIÓNS MENOS A ACTUAL. ÚTIL PARA INTRODUCIR OS TÍPICOS ÍNDICES INTERMEDIOS.
+\newcommand{\Inter}{\frame{\tableofcontents[currentsection]}}
+\newcommand{\inter}{\frame{\tableofcontents[currentsection,currentsubsection]}}
+
+% Pes de imaxe
+\renewcommand{\figurename}{Fig.}
+\addto\captionsenglish{\renewcommand{\figurename}{Fig.}}
+\setbeamertemplate{caption}[numbered]
+
+%ESTE PAQUETE PERMITE POÑER A BIBLIOGRAFIA AO PE DE PAXINA CON CONFIGURACIONS ESTETICAS PERSOAIS
+% \usepackage[style=ieee,doi=false,isbn=false,url=true,backend=bibtex]{biblatex}
+% \bibliography{./bibliografia.bib}
+% \newrobustcmd*{\footfullcitenomark}{%
+%   \AtNextCite{%
+%     \let\thefootnote\relax 
+%     \let\mkbibfootnote\mkbibfootnotetext
+%     }%
+%   \footfullcite}
+
+%paquete para engadir notas de guion ao pdf
+\usepackage{pgfpages}
+% \setbeameroption{show only notes} 
+% \setbeameroption{show notes}
+% \setbeameroption{show notes on second screen=right}
+% DATOS DO DOCUMENTO
+\title{Advanced Communication Systems} 
+\subtitle{Part 2: Multi-user Communications}
+\author[FGC]{Felipe G\'omez Cuba}
+\institute[XX]{
+\begin{columns}[T]
+\begin{column}{9cm}\centering
+Despacho 204\\
+Titorías: Lun-Xov 15:00-16:30\\
+(En caso de confinamento: videochamada a calquera horario acordado)\\
+  \texttt{gomezcuba@gts.uvigo.es}\\
+\end{column}
+\end{columns}
+}
+
+\date{}
+
+\begin{document}
+
+% Diapositiva co título
+%\frame[plain]{\titlepage}%the ``classic'' beamer cover pageç
+
+\frame{\frametitle{\\}%generate top bar, but blank line as tittle
+\titlepage
+}%approximation to the ``GPSC ppt'' cover page, but with central beamer title
+
+% \frame{\tableofcontents}
+% \note[itemize]{%itemized notes are special ``note'' slides that beamer can append to the pdf or not, depending on a boolean toggle option
+% \item Introduce yourself
+% \item In this work we studied blablabla.
+% }
+
+\frame[allowframebreaks]{\frametitle{Presentation of Contents}
+% \begin{itemize}
+%  \item \textbf{Motivation}: to apply optimization and MIMO to achieve high performance multi-user communications.\\ \ \\
+%  \item 
+ \textbf{Outline of the Contents (15h)}:
+     \begin{enumerate}
+        \item Recap of single-user Information Theory from CDA (self study)
+%         \begin{description}
+%             \item[$\dag$] definitions: entropy
+%             \item[$\dag$] usual random variables and examples 
+%             \item[$\dag$] joint entropy and conditional entropy, chain rule
+%             \item[$\dag$] joint entropy and vectors of random variables, typical examples
+%             \item[$\dag$] diferential entropy continuous r.v.
+%             \item[$\dag$] mutual information
+%             \item[$\dag$] properties of entropy and mut inf. multiple variables. chain rule.
+%             \item[$\dag$] notion of capacity, capacity of BSC
+%             \item[$\dag$] capacity of the real AWGN channel
+%             \item[$\dag$] real RF continuous time channel -> DEC -> capacity of the complex AWGN channel 
+%             \item[$\dag$] lessons of the capacity proof: error pobability as low as desired as codeword size -> inf, sup Mut Inf over space of all pdfs, Gaussian achieves
+%             \item[$\dag$] importance of the ML detector
+%             \item[$\dag$] bits per channel use vs bps, bandwidth, spectral efficiency, energy efficiency, DoF...
+%             %___________________________________s2
+%             \item[$\dag$] mutual information of N-QAM, AMC to approximate capacity in practice, ML with QAM (decisor in SISO, sphere decoding in MIMO)
+%             \item[$\dag$] suboptimal detectors in MIMO
+%             \item[$\dag$] fading, OFDM with per-subcarrier MIMO
+%             \item[$\dag$] undefined capacity in the classic sense, ergodic (emphasis OFDM) and outage (emphasis narrowband) capacity
+%          \end{description}
+        
+        \item Multiple Access Channel and receiver (3.5h)
+%         \begin{description}
+%             \item[$\dag$]  concept of multi-dimensional rate vector
+%             \item[$\dag$]  representing the newtwork in a graph
+%             \item[$\dag$]  cut set bound method
+%             \item[$\dag$]  concept of rate-region, via union of all cut set bounds
+%             \item[$\dag$]  one-user cut is known capacity result
+%             \item[$\dag$]  each multi user cut stems from a chain rule 
+%______________________________s2
+%             \item[$\dag$]  reminder of MIMO capacity and comparison of MIMO channel with cut-set bound.
+%             \item[$\dag$]  achievable rate regions based on orthogonal resource division: TDMA, FDMA, CDMA and OFDMA
+%             \item[$\dag$]  fixed instantaneous power vs. average power constraint vs resource allocation.
+%             \item[$\dag$]  capacity achieving scheme based on non-orthogonal detection
+%             \item[$\dag$]  concept of successive decoding (TIN) as interpretation of the chain rule
+%             \item[$\dag$]  slow Fading, joint outage analysis and wideband optimal orthogonal
+%             \item[$\dag$]  Fast Fading, averaging the cut set bound and FDMA no longer has max sum rate
+%             %_____________________________________s3
+%             \item[$\dag$]  Concept of individual and joint error probability
+%             \item[$\dag$]  in orthogonal cases each user signal is independent and single-user decoders are ``optimal''
+%             \item[$\dag$]  multiuser is harder than MIMO because of no joint encoding and asymmetries
+%             \item[$\dag$]  joint MAP detector minimizes Pe
+%             \item[$\dag$]  ML detector 
+%             \item[$\dag$]  linear MUD [MMSE, ZF, MF]
+%             \item[$\dag$]  practical SIC with QAM and independent user detector is suboptimal but faster
+%             \item[$\dag$]  non-linear MUD: DF as a non-linear addition to matrix inversion Taylor method
+%             \item[$\dag$]  non-linear MUD: IDD and MAP decoding schemes
+%         \end{description}
+        
+        \item Broadcast Channel and transmitter (3.5h)
+%         \begin{description}
+%             \item[$\dag$] Common vs individual messages: tv broadcast vs cellular
+%             \item[$\dag$] SISO, concept of a shared power constraint
+%             \item[$\dag$] Single user cut bounds with full power
+%             \item[$\dag$] Corner case: shared rate achievable by both users
+%             \item[$\dag$] Extension to superposition code and SIC, interpreted as $P_1$ common message + $P_2$ dedicated
+%             \item[$\dag$] Explanation of NOMA
+%             \item[$\dag$] Dual MAC channel Theorems
+%             \item[$\dag$] Interpretation of the BC capacity region as a convex optimization
+%             \item[$\dag$] Interpretation as convex-hull of dual MAC channels
+%             \item[$\dag$] MIMO special case with $n_t>U$, orthogonal channels. Motivation of precoding.
+%             \item[$\dag$] MIMO case and dual MAC channel
+%             \item[$\dag$] DoF is min(N,K)
+%             \item[$\dag$] Review of dual MAC channel Theorems
+%             \item[$\dag$] MMSE precoding vectors of dual MAC receiver
+%             \item[$\dag$] Fixed the mmse precoding, we can modify the set of SINRs with power allocation.
+%             \item[$\dag$] The power constraints of the dual are not the same as the actual allocated power
+%             \item[$\dag$] Beyond linear schemes, Tomlinson-Harashima BPSK example
+%             \item[$\dag$] Dirty Paper Coding for MIMO BC
+%             \item[$\dag$] multiple receive antennas case
+%         \end{description}
+        %SISO, concept of a shared power constraint and convex-hull of dual MAC channels
+        %
+        \item Other multi-user topologies (2h)
+            \begin{itemize}
+                \item Interference Channel
+%                     \begin{description}
+%                         \item[$\dag$] Model of the IC
+%                         \item[$\dag$] Example: cellular system with orthogonal allocation and non-cooperative BS
+%                         \item[$\dag$] Very weak interference region optimal TIN
+%                         \item[$\dag$] Very strong interference region optimal SIC
+%                         \item[$\dag$] Interference side information and DPC
+%                     \end{description}
+                \item Relay Channel and multi-hop
+%                     \begin{description}
+%                         \item[$\dag$] Model of the RC
+%                         \item[$\dag$] Cut set bounds of the RC
+%                         \item[$\dag$] Degraded gaussian RC and basic two hop
+%                         \item[$\dag$] DF, AF and QF protocols1
+%                         \item[$\dag$] Teaser of multiuser relay channel, multi-hop graphs, etc. via cut-set combinatorial examples
+%                     \end{description}
+            \end{itemize}
+        \item Medium Access Control (2h)
+            \begin{itemize}
+                \item Deterministic Access
+%                     \begin{description}
+%                         \item[$\dag$] Fixed vs dynamic allocation schemes
+%                         \item[$\dag$] Multi-user diversity
+%                         \item[$\dag$] MU-MIMO admission control
+%                     \end{description}
+                \item Random Access
+%                     \begin{description}
+%                         \item[$\dag$] ALOHA and derivates, modern collision recovery
+%                         \item[$\dag$] CSMA/CA and virtual CS
+%                         \item[$\dag$] Using different random timers to achieve MU-diversity and QoS too
+%                     \end{description}
+                \item Hybrid Access and HARQ
+%                     \begin{description}
+%                         \item[$\dag$] Diversity decoding with same codebook
+%                         \item[$\dag$] Independent codebook approximation with puncturing
+%                     \end{description}
+            \end{itemize}
+        \item Spectrum Co-existence (3h)
+            \begin{itemize}
+             \item Cognitive Radio
+%              \item Sensing
+             \item Network Slicing
+            \end{itemize}
+        \item Current systems, 5G and WiFi6 (1h)
+%             \begin{itemize}
+%                 \item 5G Talk By Luis
+%                 \item Some pointers to WiFi6 features
+%             \end{itemize}
+    \end{enumerate}
+% \end{itemize}
+
+
+
+
+}
+
+\frame{
+\frametitle{Bibliography}
+
+Main Reference
+\begin{enumerate}
+ \item David Tse, Pramod Viswanath, Fundamentals of Wireless Communication, Cambridge University Press, 2005\\
+ \url{https://web.stanford.edu/~dntse/wireless\_book.html}\\ \ \\
+\end{enumerate} 
+
+For curious readers [Not required to buy!] 
+\begin{enumerate}
+ \item Thomas M. Cover, Joy A. Thomas, Elements of Information Theory, John Wiley \& Sons Inc 2006 
+ \item Andrea Goldsmith, Wireless Communications, Cambridge University Press 2009
+\end{enumerate} 
+
+}
+
+\end{document}
+
+

@@ -1,0 +1,448 @@
+% % \documentclass[xcolor=dvipsnames,hyperref={epspagelabels=false}]{beamer}
+\documentclass[xcolor=dvipsnames]{beamer}
+%\documentclass[blue]{beamer}
+%\documentclass[xcolor=dvipsname]{beamer}
+
+% INCLUSIÓN DOS PAQUETES IMPRESCINDIBLES DE IDIOMA E CODIFICACIÓN DE CARACTERE.
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+
+% PAQUETES PARA GRÁFICOS.
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{caption}
+% \usepackage{float}
+% \usepackage{ucs} 
+% \usepackage{subcaption}
+\usepackage{pgfplots}
+\def\func1(#1,#2){exp(-(#1-#2)^2/(0.01))}
+\usepackage{tikz}
+\usepackage{varwidth}
+\usepackage{animate}
+\usetikzlibrary{shapes,arrows,calc,patterns}
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+cross/.default={1pt}}
+\tikzset{
+    block/.style = {draw, rectangle, 
+        minimum height=1cm, 
+        minimum width=1.2cm},
+    input/.style = {coordinate,node distance=1cm and 2cm},
+    output/.style = {coordinate,node distance=2cm},
+    arrow/.style={draw, -latex,node distance=1.5cm},
+    pinstyle/.style = {pin edge={latex-, black,node distance=1.5cm}},
+    sum/.style = {draw, circle, node distance=1cm}
+}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1.3pt] (char) {#1};}}
+\usepackage{psfrag}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts} 
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{amssymb} 
+\usepackage{amsthm}
+\usepackage{tikz}
+ \usetikzlibrary{calc}
+\usepackage{array}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{stfloats}
+    \DeclareMathOperator{\atan}{atan}
+    \DeclareMathOperator{\acos}{acos}
+    \DeclareMathOperator{\asin}{asin}
+\usepackage{algorithm} 
+\usepackage{algorithmic} 
+\usepackage{url} 
+  \usepackage{enumerate}
+\usepackage{multirow}
+\usepackage{wasysym}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+
+% \usepackage[style=ieee,doi=false,isbn=false,url=true,backend=bibtex]{biblatex}
+% \bibliography{../WidebandScaling.bib}
+% \bibliography{../LTE.bib}
+
+% \newrobustcmd*{\footfullcitenomark}{%
+%   \AtNextCite{%
+%     \let\thefootnote\relax 
+%     \let\mkbibfootnote\mkbibfootnotetext
+%     }%
+%   \footfullcite}
+
+% USO DUNHA FONTE DIFERENTE.
+% Empregar as fontes lmodern permite librarse de molestos warning á hora da compilación.
+% Se non se consideran molestos, ou se non gusta a nova fonte, coméntese esta liña.
+% O outro xeito de arranxar o problema e mediante \let\Tiny = \tiny
+% \usepackage{lmodern}
+
+% DETLARACIÓN DO TEMA A USAR
+% 
+% LARGE HEADERS
+% \usetheme{Berkeley} %large titlebar w/side dossier
+% \usetheme{Copenhagen} %large titlebar w/2 side index
+% \usetheme{Antibes} %large titlebar w/tree
+% \usetheme{Singapore} %large titlebar w/balls evanescent
+% \usetheme{Berlin} %large titlebar w/balls solid
+% \usetheme{Dresden} %same as above with different color boxing
+% \usetheme{Rochester} %large tittle-only titlebar
+% MEDIUM HEADERS
+% \usetheme{CambridgeUS} %title titlebar w/current section
+% \usetheme{Malmoe} %title titlebar w/current section Copenhagen style
+% \usetheme{Madrid} %title titlebar w/page counter footer
+% THIN HEADERS
+% \usetheme{Frankfurt} %small titlebar w/ progress balls
+% WHITE PAGE
+% \usetheme{Boadilla} %no titlebar, thin bottom
+\usetheme{Pittsburgh} %nothing
+% SIDE GUIDES
+% \usetheme{Goettingen} %right dossier evanescent
+% \usetheme{Marburg} %right dossier fading to black
+% \usetheme{Bergen} %notebook
+
+%aspect modifiers
+\useinnertheme{circles} %this makes item lists nicer
+% \useoutertheme{infolines} %toggle thin info borders
+
+
+% DECLARACIÓN DA COMBINACIÓN DE CORES A USAR. SE NON SE ESPECIFICA NADA TOMA A DEFINIDA POR DEFECTO
+% conxuntos completos
+% \usecolortheme{seagull} %makes title boxes gray color with blackr
+% \usecolortheme{spruce} %makes title boxes pastel blue - gray color
+% cores internos (items)
+% \usecolortheme[named=Red]{structure} 
+% \usecolortheme[named=Green]{structure} 
+% \usecolortheme[named=OliveGreen]{structure} 
+% \usecolortheme[named=PineGreen]{structure} 
+% \usecolortheme[named=TealBlue]{structure} 
+% \usecolortheme[named=SeaGreen]{structure}
+% \usecolortheme[RGB={00,78,135}]{structure} % a dark cobalt blue 
+% \usecolortheme[RGB={155,0,20}]{structure} % a slighlty darkened mate red
+\usecolortheme[RGB={0,95,134}]{structure} % Nuria's UVigo blue
+% cores externos (marco)- Relativos a estructura
+\usecolortheme{whale} %makes title boxes dark $STRUC color with white text
+% \usecolortheme{dolphin} %makes title boxes clear $STRUC with dark $STRUC text
+% \usecolortheme{seahorse} %makes title boxes pastel $STRUC with black text
+
+%changes to the template to 1) specify a non-text header band with a white strip on top and 2) write the tittle BELOW the band instead of inside
+\setbeamertemplate{frametitle}{%
+    \nointerlineskip%
+    \vspace{.03in} % Pads top of block
+    \begin{beamercolorbox}[wd=\paperwidth,ht=0.36cm,dp=0.6ex]{frametitle}
+        \\%blank line to make this box appear. A generic set of logos can be put over it with
+    \end{beamercolorbox}%
+    %\hfill
+    \textcolor{frametitle.bg}{\bf \insertframetitle} %takes title color from the palette itself
+}
+%A General ``add logos to top of frame'' tool from stackexchange. independent of style
+\newcommand{\framelogo}[1]{\def\thisframelogos{#1}}
+\addtobeamertemplate{frametitle}{}{%
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north west,yshift=0pt] at (current page.north west) {%adjust yshift to vertically center logos to 
+    \foreach \img in \thisframelogos {%
+        \hspace{.5ex}%
+        \includegraphics[height=0.35cm]{\img}%
+    }%
+};
+\end{tikzpicture}}
+%a command to add a figure to the ``logo set'' above
+\framelogo{logouvigo.png}
+
+
+\usepackage{pgfpages}
+% \setbeameroption{show only notes} 
+% \setbeameroption{show notes}
+% \setbeameroption{show notes on second screen=right}
+%---------------
+% LIMIAR
+%---------------
+
+% Comando para evitar warning por tamaños de fonte. Se se empregan as fontes lmodern non se precisa e debe ser comentado.
+\let\Tiny = \tiny
+
+% CREACIÓN DUN COMANDO QUE INTRODUCE UNHA DIAPOSITIVA CUN ÍNDICE NO QUE APARECEN VELADAS TÓDALAS SECCIÓNS MENOS A ACTUAL. ÚTIL PARA INTRODUCIR OS TÍPICOS ÍNDICES INTERMEDIOS.
+\newcommand{\inter}{\frame{\tableofcontents[currentsection,currentsubsection]}}
+\newcommand{\Inter}{\frame{\tableofcontents[currentsection]}}
+\renewcommand{\figurename}{Fig.}
+\addto\captionsenglish{\renewcommand{\figurename}{Fig.}}
+\setbeamertemplate{caption}[numbered]
+
+\newcommand{\field}[1]{\mathbb{#1}}
+
+\newcommand{\Hb}{\mathbf{H}}
+\newcommand{\Sb}{\Sigma}
+\newcommand{\Sm}{\mathbf{S}}
+\newcommand{\U}{\mathbf{U}}
+\newcommand{\F}{\mathbf{F}}
+\newcommand{\V}{\mathbf{V}}
+\newcommand{\A}{\mathbf{A}}
+\newcommand{\B}{\mathbf{B}}
+\newcommand{\Cb}{\mathbf{C}}
+\newcommand{\D}{\mathbf{D}}
+% \newcommand{\E}{\mathbf{E}}
+\newcommand{\G}{\mathbf{G}}
+\newcommand{\T}{\mathbf{T}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\M}{\mathbf{M}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\W}{\mathbf{W}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\K}{\mathbf{K}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\Pb}{\mathbf{P}}
+\newcommand{\Lb}{\mathbf{L}}
+\newcommand{\Phib}{\mathbf{\boldsymbol{\Phi}}}
+\newcommand{\Upsb}{\mathbf{\boldsymbol{\Upsilon}}}
+\newcommand{\Deltab}{\mathbf{\boldsymbol{\Delta}}}
+\newcommand{\Q}{\mathbf{Q}}
+% \newcommand{\D}{\mathbf{D}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\Rm}{\mathbf{R^{-1}}}
+\newcommand{\LL}{\mathbf{\boldsymbol{\Lambda}}}
+\newcommand{\J}{\mathbf{J}}
+
+\newcommand{\cc}{\mathbf{c}}
+\newcommand{\h}{\mathbf{h}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\s}{\mathbf{s}}
+\newcommand{\q}{\mathbf{q}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\bb}{\mathbf{b}}
+\newcommand{\n}{\mathbf{n}}
+\newcommand{\w}{\mathbf{w}}
+\newcommand{\uv}{\mathbf{u}}
+\newcommand{\al}{\mathbf{\boldsymbol{\alpha}}}
+\newcommand{\vmu}{\mathbf{\boldsymbol{\mu}}}
+\newcommand{\vlambda}{\mathbf{\boldsymbol{\lambda}}}
+\newcommand{\g}{\mathbf{g}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\ab}{\mathbf{a}}
+\newcommand{\pp}{\mathbf{p}}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pw}[1]{\frac{\partial #1}{\partial \w}}
+
+
+\newcommand{\rank}{\textnormal{rank}}
+\newcommand{\trace}{\textnormal{trace}}
+\newcommand{\exptr}{\textnormal{exptr}}
+\newcommand{\tr}{\textnormal{tr}}
+\newcommand{\vstack}{\textnormal{vec}}
+\newcommand{\diag}{\textnormal{diag}}
+%  |x>
+\newcommand{\ket}[1]{\left\vert#1\right\rangle}
+%  <x|
+\newcommand{\bra}[1]{\left\langle#1\right\vert}
+%  <x|y>
+\newcommand{\braket}[2]{\left< #1 \vphantom{#2}\,
+                        \right\vert\left.\!\vphantom{#1} #2 \right>}
+%  <x|a|y>
+\newcommand{\sandwich}[3]{\left< #1 \vphantom{#2 #3} \right|
+                          #2 \min\left(\vphantom{#1 #2} #3 \right>}
+%  d/dt
+\newcommand{\ddt}{\frac{d}{dt}}
+%  D/Dx
+\newcommand{\pdd}[1]{\frac{\partial}{\partial#1}}
+%  |x|
+\newcommand{\abs}[1]{\left\vert#1\right\vert}
+%  k_{x}
+\newcommand{\kv}[1]{\mathbf{k}_{#1}}
+%  \textnormal{E}_{domain of integration}{variable}
+\newcommand{\Ex}[2]{{\textnormal{E}_{#1}\left[#2\right]}}
+\newcommand{\CEx}[3]{{\textnormal{E}_{#1}\left[#2|#3\right]}}
+\newcommand{\CInf}[3]{{\textnormal{I}\left(#1;#2|#3\right)}}
+\newcommand{\Inf}[2]{{\textnormal{I}\left(#1;#2\right)}}
+\newcommand{\CEnt}[2]{{\textnormal{H}\left(#1|#2\right)}}
+\newcommand{\Ent}[1]{{\textnormal{H}\left(#1\right)}}
+\newcommand{\dCEnt}[2]{{\textnormal{h}\left(#1|#2\right)}}
+\newcommand{\dEnt}[1]{{\textnormal{h}\left(#1\right)}}
+
+\newcommand\Tau{\mathcal{T}}
+% \newtheorem{definition}{Definition}
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \UE (#1) {};}
+\newcommand{\DrawBox}[4][]{%
+    \tikz[overlay,remember picture]{%
+        \coordinate (TopLeft)     at ($(#2)+(-0.4em,1.6em)$);
+        \coordinate (BottomRight) at ($(#3)+(0.4em,-1.0em)$);
+        %
+        \path (TopLeft); \pgfgetlastxy{\XCoord}{\IgnoreCoord};
+        \path (BottomRight); \pgfgetlastxy{\IgnoreCoord}{\YCoord};
+        \coordinate (LabelPoint) at ($(\XCoord,\YCoord)!0.5!(BottomRight)$);
+        %
+        \draw [red,#1] (TopLeft) rectangle (BottomRight);
+        \UE [below, #1, fill=none, fill opacity=1] at (LabelPoint) {#4};
+    }
+}
+%   \usepackage[pdftex]{graphicx}
+  \usepackage{epstopdf}
+   \graphicspath{{./img/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+   \DeclareGraphicsExtensions{.eps,.png,.jpg}
+   
+   
+% \newtheorem{definition}{Definition}
+% \newtheorem{lemma}{Lemma}
+% \newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem{proposition}{Proposition}
+% \newtheorem{corollary}{Corollary}
+% \newtheorem{example}{Example}
+\newtheorem{homework}{Homework}
+   
+   \definecolor{VCobalt}{HTML}{005682} % a mate dark blue
+   \definecolor{TZTeal}{HTML}{008080} % a mate dark teal
+   \definecolor{KYJade}{HTML}{008151} % a mate dark green
+   \definecolor{ARust}{HTML}{a10000} % a mate dark red
+   \definecolor{TAMustard}{HTML}{a1a100} % a mate dark red
+   \definecolor{blueH3}{rgb}{0,.5,1} % a ligher blue
+   \definecolor{blueH2}{rgb}{0,0.25,0.75} % a medium blue
+   \definecolor{blueH1}{rgb}{0,0,0.5} % a darker blue
+   \definecolor{GPSCCommonBlue}{HTML}{005f86} % Nuria's reference
+% DATOS DO DOCUMENTO
+% DATOS DO DOCUMENTO
+\title{Advanced Communication Systems Part 2:\\ Multi-user Communications:\\ WiFi6 Timeline}
+%\subtitle{}
+\author[XX]{Felipe G\'omez Cuba}
+\institute[XX]{
+\begin{columns}[T]
+\begin{column}{9cm}\centering
+Despacho 204\\
+Titorías: Lun-Ven 15:00-16:15\\
+(Medidas COVID: Por videochamada a calquera horario acordado)\\
+  \texttt{gomezcuba@gts.uvigo.es}\\
+\end{column}
+\end{columns}
+}
+
+\date{25 November 2020 }
+
+\begin{document}
+
+% Diapositiva co título
+%\frame[plain]{\titlepage}%the ``classic'' beamer cover pageç
+
+\frame{\frametitle{\\}%generate top bar, but blank line as tittle
+\titlepage
+}%approximation to the ``GPSC ppt'' cover page, but with central beamer title
+
+% \frame{\tableofcontents}
+% \note[itemize]{%itemized notes are special ``note'' slides that beamer can append to the pdf or not, depending on a boolean toggle option
+% \item Introduce yourself
+% \item In this work we studied blablabla.
+% }
+
+% \section{IAB MmWave Network}
+
+\frame[allowframebreaks]{\frametitle{The WiFi Specifications}
+
+\begin{itemize}
+ \item Scope: Wireless Local Area Networks (WLAN)\\ \ \\
+ \item PHY layer and MAC protocol: IEEE Standards 802.11\\ \ \\
+ \item Commertial and industry agreements: WiFi Alliance\\ \ \\
+\end{itemize}
+}
+
+
+\frame{\frametitle{WiFi PHY over the years}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale=.9]
+ \draw[->] (0,0) -- (9.5,0);
+ \draw[->] (0,0) -- (0,7);
+ 
+ \node[anchor=east, rotate=90] at (.5,0) {1997};
+ \node[anchor=east] at (0,1) {DSSS};
+ 
+ \node[draw,circle,fill=black,inner sep=1] at (.5,1) {};
+ \node[anchor=west,rotate=-60] at (.5,1) {802.11};
+ 
+ \node[anchor=east, rotate=90] at (1.5,0) {1999};
+ \node[draw,circle,fill=black,inner sep=1] at (1.5,1) {};
+ \node[anchor=east, rotate=-60] at (1.5,1) {802.11b};
+ 
+ \node[anchor=east] at (0,2) {OFDM};
+ \node[draw,circle,fill=black,inner sep=1] at (1.5,2) {};
+ \node[anchor=east, rotate=-60] at (1.5,2) {802.11a};
+ 
+ \node[anchor=east, rotate=90] at (3,0) {2003};
+ \node[draw,circle,fill=black,inner sep=1] at (3,2) {};
+ \node[anchor=east, rotate=-60] at (3,2) {802.11g};
+ 
+ \node[anchor=east] at (0,4) {MIMO};
+ \node[anchor=east, rotate=90] at (4.5,0) {2009};
+  \node[draw,circle,fill=black,inner sep=1] at (4.5,4) {};
+ \node[anchor=east, rotate=-60] at (4.5,4) {802.11n};
+ 
+ \node[anchor=east, rotate=90] at (6,0) {2013};
+ \node[anchor=east] at (0,5) {MU-MIMO BC};
+ \node[draw,circle,fill=black,inner sep=1] at (6,5) {};
+ \node[anchor=east, rotate=-60] at (6,5) {802.11ac};
+ 
+ \node[anchor=east, rotate=90] at (6.5,0) {2016};
+ \node[anchor=east] at (0,5.5) {60GHz};
+ \node[draw,circle,fill=black,inner sep=1] at (6.5,5.5) {};
+ \node[anchor=east, rotate=-60] at (6.5,5.5) {802.11ad};
+ 
+ 
+ 
+ \node[anchor=east, rotate=90] at (8,0) {2020};
+ \node[anchor=east] at (0,6.5) {OFDMA};
+ \node[draw,circle,fill=black,inner sep=1] at (8,6.5) {};
+ \node[anchor=west, rotate=-60] at (8,6.5) {802.11ax};
+ 
+ \node[anchor=east, rotate=90] at (8.5,0) {202x};
+ \node[anchor=east] at (0,7) {mmWave};
+ \node[draw,circle,fill=black,inner sep=1] at (8.5,7) {};
+ \node[anchor=west, rotate=-60] at (8.5,7) {802.11ay};
+ 
+\end{tikzpicture}
+\end{figure}
+
+}
+
+\frame{\frametitle{WiFi to WiFi6 in a Nutshell}
+
+\begin{itemize}
+ \item WiFi (.11g $\sim$ 56 Mbps) \\ \ \\
+
+ \item WiFiN (.11n $\sim$ 600 Mbps)
+ \begin{itemize}
+    \item $40$ MHz bandwidth
+    \item Single-user MIMO$\times 4$
+    \item $5/6$ parity check\\ \ \\
+\end{itemize}
+
+ \item WiFi5 (.11.ac/ad $\sim$ 7 Gbps)
+ \begin{itemize}
+    \item $2\times 80$ MHz bandwidth
+    \item MU-MIMO$\times 8$ BC only (synchronization)
+    \item $256$-QAM\\ \ \\
+\end{itemize}
+ \item WiFi6 (.11.ax/ay $\sim$ 9.6 Gbps)
+\begin{itemize}
+ \item No more bandwidth or antennas (Spectral Efficiency)
+ \item OFDMA and MAC MU-MIMO
+ \item Assignment on top of contention DCF
+ \item Emphasis on ``contention-free time reservations''\\ \ \\
+\end{itemize}
+\end{itemize}
+
+}
+\end{document}
+
+
