@@ -15,12 +15,12 @@ Compile with standard LaTeX environment, or fetch the PDF in our release. A EET 
 
 ## Structure of the Code
 
-* Class 1: MIMO channel models
-* Class 2: MIMO channel capacity
-* Class 3: MIMO spatial multiplexing and receiver arquitectures
-* Class 4: MIMO time-varying channel modeling
-* Class 5: MIMO diversity and limited feedback precoding
-* Class 6: Advanced Multicarrier Waveforms beyond OFDM
+* Part 1: MAC channels
+* Part 2: BC channels
+* Part 3: Other Multi-user channels
+* Part 4: Medium Access
+* Part 5: Spectrum Coexistence
+* Part 6: Trends in current WiFi7 and 5G standards
 
 ##  Acknowledgments
 
